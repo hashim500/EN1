@@ -244,12 +244,18 @@ function switchSection(sectionType) {
     });
     
     // إظهار القسم المختار
-    document.querySelector(`[data-section="${sectionType}"]`).classList.add('active');
+    const targetSection = document.querySelector(`[data-section="${sectionType}"]`);
+    if (targetSection) {
+        targetSection.classList.add('active');
+    }
     
     // تحديث أزرار التبويب
     document.querySelectorAll('.lesson-type-tab').forEach((tab) => {
         tab.classList.toggle('active', tab.dataset.type === sectionType);
     });
+    
+    // إعادة إضافة معالجات الأحداث
+    addTabEventListeners();
     
     // تحديث المحتوى
     if (sectionType === 'letters') {
@@ -264,14 +270,18 @@ function switchSection(sectionType) {
     }
 }
 
-$('languageToggle').addEventListener('click', () => { language = language === 'ar' ? 'en' : 'ar'; localStorage.setItem('en1-language', language); applyLanguage(); });
-
-// معالج الأحداث للـ Tabs
-document.querySelectorAll('.lesson-type-tab').forEach((tab) => {
-    tab.addEventListener('click', () => {
-        switchSection(tab.dataset.type);
+function addTabEventListeners() {
+    document.querySelectorAll('.lesson-type-tab').forEach((tab) => {
+        // إزالة المستمعين القدامى أولاً
+        const newTab = tab.cloneNode(true);
+        tab.parentNode.replaceChild(newTab, tab);
+        
+        // إضافة المستمع الجديد
+        newTab.addEventListener('click', () => {
+            switchSection(newTab.dataset.type);
+        });
     });
-});
+}
 
 // تحميل الأصوات المتاحة
 if ('speechSynthesis' in window) {
@@ -280,6 +290,16 @@ if ('speechSynthesis' in window) {
     };
     // في Firefox قد نحتاج إلى طلب الأصوات مسبقاً
     speechSynthesis.getVoices();
+}
+
+// معالج تغيير اللغة
+const langToggle = $('languageToggle');
+if (langToggle) {
+    langToggle.addEventListener('click', () => { 
+        language = language === 'ar' ? 'en' : 'ar'; 
+        localStorage.setItem('en1-language', language); 
+        applyLanguage(); 
+    });
 }
 
 applyLanguage();
