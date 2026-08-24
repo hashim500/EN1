@@ -168,7 +168,9 @@ h1 { margin: 0; font-size: clamp(27px, 6vw, 42px); line-height: 1.1; }
 .hidden-section { display: none; }
 
 .site-footer {
+    width: 100%;
     margin-top: 32px;
+    margin-inline: auto;
     padding: 18px 12px 0;
     border-top: 1px solid var(--line);
     text-align: center;
