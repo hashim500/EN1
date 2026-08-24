@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="دروس محادثة إنجليزية قصيرة مع ترجمة عربية ونطق صوتي">
+    <title>الإنجليزية السهلة</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <main class="app">
+        <header class="site-header">
+            <div>
+                <p class="eyebrow" data-i18n="eyebrow">تعلم خطوة بخطوة</p>
+                <h1 data-i18n="title">الإنجليزية السهلة</h1>
+                <p class="subtitle" data-i18n="subtitle">دروس محادثة عملية من الصفر إلى التحدث بثقة</p>
+            </div>
+            <button class="language-toggle" id="languageToggle" type="button" aria-label="تغيير اللغة">English</button>
+        </header>
+
+        <section class="magic-section" aria-labelledby="magicTitle">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow" data-i18n="magicEyebrow">مفردات أساسية</p>
+                    <h2 id="magicTitle" data-i18n="magicTitle">🧙 المفتاح السحري</h2>
+                </div>
+                <span class="word-total" id="wordTotal">0 كلمة</span>
+            </div>
+            <p class="section-note" data-i18n="magicNote">كلمة إنجليزية مع جملة بسيطة وترجمة عربية ونطق صوتي.</p>
+            <div class="magic-tabs" id="magicTabs" role="tablist" aria-label="تصنيفات الكلمات"></div>
+            <div class="word-list" id="wordList" aria-live="polite"></div>
+        </section>
+
+        <section class="progress-panel" aria-label="تقدم التعلم">
+            <div class="progress-heading">
+                <span data-i18n="progress">تقدمك</span>
+                <strong id="progressText">0%</strong>
+            </div>
+            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <span id="progressFill"></span>
+            </div>
+            <div class="stats">
+                <span><b id="completedDisplay">0</b> <span data-i18n="completed">دروس مكتملة</span></span>
+                <span><b id="scoreDisplay">0</b> <span data-i18n="points">نقطة</span></span>
+            </div>
+        </section>
+
+        <h2 class="lessons-heading" data-i18n="lessonsTitle">دروس المحادثة</h2>
+        <nav class="lesson-grid" id="lessonGrid" aria-label="الدروس"></nav>
+        <section id="contentArea" class="content" aria-live="polite"></section>
+        <p class="footer-note" data-i18n="footer">اضغط على زر السماعة لسماع النطق الإنجليزي</p>
+    </main>
+</body>
+</html>
