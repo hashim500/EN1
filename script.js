@@ -44,28 +44,42 @@ const $ = (id) => document.getElementById(id);
 
 function speak(text) {
     if (!text || !('speechSynthesis' in window)) return;
-    text = String(text).trim();
+    text = String(text || '').trim();
     if (!text) return;
     
-    speechSynthesis.cancel();
+    // إيقاف أي كلام جاري
+    window.speechSynthesis.cancel();
+    
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'en-US';
-    utterance.rate = 0.85;
-    utterance.pitch = 1;
-    utterance.volume = 1;
+    utterance.rate = 0.9;
+    utterance.pitch = 1.0;
+    utterance.volume = 1.0;
     
+    // معالجة الأخطاء
     utterance.onerror = (event) => {
-        console.warn('Speech synthesis error:', event.error);
+        console.warn('Speech error:', event.error);
+    };
+    
+    utterance.onstart = () => {
+        console.log('Speaking:', text);
     };
     
     utterance.onend = () => {
-        // Successfully finished speaking
+        console.log('Speech complete');
     };
     
     try {
-        speechSynthesis.speak(utterance);
+        // إعطاء الأولوية لصوت إنجليزي محلي إن أمكن
+        const voices = window.speechSynthesis.getVoices();
+        const englishVoice = voices.find(voice => voice.lang.startsWith('en'));
+        if (englishVoice) {
+            utterance.voice = englishVoice;
+        }
+        
+        window.speechSynthesis.speak(utterance);
     } catch (error) {
-        console.error('Error in speech synthesis:', error);
+        console.error('Speech synthesis error:', error);
     }
 }
 
@@ -139,4 +153,14 @@ function updateProgress() {
 }
 
 $('languageToggle').addEventListener('click', () => { language = language === 'ar' ? 'en' : 'ar'; localStorage.setItem('en1-language', language); applyLanguage(); });
+
+// تحميل الأصوات المتاحة
+if ('speechSynthesis' in window) {
+    speechSynthesis.onvoiceschanged = () => {
+        console.log('Voices loaded:', speechSynthesis.getVoices().length);
+    };
+    // في Firefox قد نحتاج إلى طلب الأصوات مسبقاً
+    speechSynthesis.getVoices();
+}
+
 applyLanguage();
