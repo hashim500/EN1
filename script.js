@@ -43,12 +43,30 @@ let completed = new Set(JSON.parse(localStorage.getItem('en1-completed') || '[]'
 const $ = (id) => document.getElementById(id);
 
 function speak(text) {
-    if (!('speechSynthesis' in window)) return;
+    if (!text || !('speechSynthesis' in window)) return;
+    text = String(text).trim();
+    if (!text) return;
+    
     speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'en-US';
-    utterance.rate = .85;
-    speechSynthesis.speak(utterance);
+    utterance.rate = 0.85;
+    utterance.pitch = 1;
+    utterance.volume = 1;
+    
+    utterance.onerror = (event) => {
+        console.warn('Speech synthesis error:', event.error);
+    };
+    
+    utterance.onend = () => {
+        // Successfully finished speaking
+    };
+    
+    try {
+        speechSynthesis.speak(utterance);
+    } catch (error) {
+        console.error('Error in speech synthesis:', error);
+    }
 }
 
 function renderMagic() {
@@ -56,7 +74,14 @@ function renderMagic() {
     const activeList = magicLists[renderMagic.activeIndex || 0];
     $('wordTotal').textContent = `${activeList.words.length} ${language === 'ar' ? 'كلمة' : 'words'}`;
     $('magicTabs').innerHTML = magicLists.map((list, index) => `<button class="magic-tab ${index === (renderMagic.activeIndex || 0) ? 'active' : ''}" data-magic-list="${index}" type="button" role="tab">${list.title[language]} <span class="count">${list.words.length}</span></button>`).join('');
-    $('wordList').innerHTML = activeList.words.map(([en, ar, sentence]) => `<article class="word-card"><div class="word-row"><span class="word-en">${en}</span><span class="word-ar">${language === 'ar' ? ar : en}</span><div class="word-actions"><button class="sound-btn word-sound" type="button" data-speak="${en}">🔊 ${t.word}</button><button class="sound-btn word-sound" type="button" data-speak="${sentence}">🔊 ${t.sentence}</button></div></div><div class="sentence-row"><span class="sentence-text">📖 ${sentence}<small>(${t.meaning}: ${ar})</small></span></div></article>`).join('');
+    
+    $('wordList').innerHTML = activeList.words.map(([en, ar, sentence]) => {
+        en = String(en || '').trim();
+        ar = String(ar || '').trim();
+        sentence = String(sentence || '').trim();
+        return `<article class="word-card"><div class="word-row"><span class="word-en">${en}</span><span class="word-ar">${language === 'ar' ? ar : en}</span><div class="word-actions"><button class="sound-btn word-sound" type="button" data-speak="${en}">🔊 ${t.word}</button><button class="sound-btn word-sound" type="button" data-speak="${sentence}">🔊 ${t.sentence}</button></div></div><div class="sentence-row"><span class="sentence-text">📖 ${sentence}<small>(${t.meaning}: ${ar})</small></span></div></article>`;
+    }).join('');
+    
     document.querySelectorAll('[data-magic-list]').forEach((button) => button.addEventListener('click', () => { renderMagic.activeIndex = Number(button.dataset.magicList); renderMagic(); }));
     document.querySelectorAll('#wordList [data-speak]').forEach((button) => button.addEventListener('click', () => speak(button.dataset.speak)));
 }
@@ -79,7 +104,24 @@ function renderLessons() {
 function renderLesson() {
     const lesson = lessons[currentLesson];
     const t = translations[language];
-    $('contentArea').innerHTML = `<div class="lesson-header"><div><span class="badge">${t.beginner}</span><h2 class="lesson-title">${lesson.title[language]}</h2></div><span class="lesson-count">${t.lesson} ${currentLesson + 1}/${lessons.length}</span></div><div class="card"><h2>${t.vocabulary}</h2>${lesson.vocab.map(([en, ar]) => `<div class="vocab-row"><span class="english">${en}</span><span class="translation">${language === 'ar' ? ar : en}</span><button class="sound-btn" type="button" data-speak="${en}" aria-label="${t.listen}">🔊</button></div>`).join('')}</div><div class="card"><h2>${t.conversation}</h2>${lesson.dialogs.map(([speaker, text, ar]) => `<button class="dialog" type="button" data-speak="${text}"><span class="speaker">${speaker}:</span> <span class="text">${text}</span><span class="ar">${language === 'ar' ? ar : text}</span></button>`).join('')}</div>${completed.has(currentLesson) ? `<div class="done-message">✓ ${t.completedLesson}</div>` : `<button class="action-btn complete" id="completeLesson" type="button">✓ ${t.complete}</button>`}<div class="nav-row">${currentLesson ? `<button class="action-btn" id="previousLesson" type="button">← ${t.previous}</button>` : '<span></span>'}${currentLesson < lessons.length - 1 ? `<button class="action-btn" id="nextLesson" type="button">${t.next} →</button>` : '<span></span>'}</div>`;
+    
+    // معالجة vocab بشكل آمن
+    const vocabHTML = lesson.vocab.map(([en, ar]) => {
+        en = String(en || '').trim();
+        ar = String(ar || '').trim();
+        return `<div class="vocab-row"><span class="english">${en}</span><span class="translation">${language === 'ar' ? ar : en}</span><button class="sound-btn" type="button" data-speak="${en}" aria-label="${t.listen}">🔊</button></div>`;
+    }).join('');
+    
+    // معالجة dialogs بشكل آمن
+    const dialogsHTML = lesson.dialogs.map(([speaker, text, ar]) => {
+        speaker = String(speaker || '').trim();
+        text = String(text || '').trim();
+        ar = String(ar || '').trim();
+        return `<button class="dialog" type="button" data-speak="${text}"><span class="speaker">${speaker}:</span> <span class="text">${text}</span><span class="ar">${language === 'ar' ? ar : text}</span></button>`;
+    }).join('');
+    
+    $('contentArea').innerHTML = `<div class="lesson-header"><div><span class="badge">${t.beginner}</span><h2 class="lesson-title">${lesson.title[language]}</h2></div><span class="lesson-count">${t.lesson} ${currentLesson + 1}/${lessons.length}</span></div><div class="card"><h2>${t.vocabulary}</h2>${vocabHTML}</div><div class="card"><h2>${t.conversation}</h2>${dialogsHTML}</div>${completed.has(currentLesson) ? `<div class="done-message">✓ ${t.completedLesson}</div>` : `<button class="action-btn complete" id="completeLesson" type="button">✓ ${t.complete}</button>`}<div class="nav-row">${currentLesson ? `<button class="action-btn" id="previousLesson" type="button">← ${t.previous}</button>` : '<span></span>'}${currentLesson < lessons.length - 1 ? `<button class="action-btn" id="nextLesson" type="button">${t.next} →</button>` : '<span></span>'}</div>`;
+    
     document.querySelectorAll('[data-speak]').forEach((button) => button.addEventListener('click', () => speak(button.dataset.speak)));
     $('completeLesson')?.addEventListener('click', () => { completed.add(currentLesson); localStorage.setItem('en1-completed', JSON.stringify([...completed])); renderLessons(); renderLesson(); });
     $('previousLesson')?.addEventListener('click', () => { currentLesson -= 1; renderLessons(); renderLesson(); });
