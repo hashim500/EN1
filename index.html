@@ -19,7 +19,27 @@
             <button class="language-toggle" id="languageToggle" type="button" aria-label="تغيير اللغة">English</button>
         </header>
 
-        <section class="magic-section" aria-labelledby="magicTitle">
+        <!-- نظام اختيار نوع الدروس -->
+        <nav class="lesson-type-tabs" role="tablist" aria-label="نوع الدرس">
+            <button class="lesson-type-tab active" data-type="letters" type="button" role="tab">🔤 الأحرف</button>
+            <button class="lesson-type-tab" data-type="magic" type="button" role="tab">🧙 المفتاح السحري</button>
+            <button class="lesson-type-tab" data-type="sentences" type="button" role="tab">📝 الجمل</button>
+            <button class="lesson-type-tab" data-type="conversations" type="button" role="tab">💬 المحادثة</button>
+        </nav>
+
+        <!-- قسم الأحرف -->
+        <section class="section-content active" data-section="letters">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">🔤 تعلم الأحرف</p>
+                    <h2>الأبجدية الإنجليزية</h2>
+                </div>
+            </div>
+            <div class="letters-grid" id="lettersGrid"></div>
+        </section>
+
+        <!-- قسم المفتاح السحري -->
+        <section class="section-content" data-section="magic" aria-labelledby="magicTitle">
             <div class="section-heading">
                 <div>
                     <p class="eyebrow" data-i18n="magicEyebrow">مفردات أساسية</p>
@@ -30,6 +50,29 @@
             <p class="section-note" data-i18n="magicNote">كلمة إنجليزية مع جملة بسيطة وترجمة عربية ونطق صوتي.</p>
             <div class="magic-tabs" id="magicTabs" role="tablist" aria-label="تصنيفات الكلمات"></div>
             <div class="word-list" id="wordList" aria-live="polite"></div>
+        </section>
+
+        <!-- قسم الجمل -->
+        <section class="section-content" data-section="sentences">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">📝 الجمل الشائعة</p>
+                    <h2>جمل يومية مهمة</h2>
+                </div>
+            </div>
+            <div class="sentences-list" id="sentencesList"></div>
+        </section>
+
+        <!-- قسم المحادثات -->
+        <section class="section-content" data-section="conversations">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">💬 دروس المحادثة</p>
+                    <h2 id="conversationsTitle">تعلم المحادثة</h2>
+                </div>
+            </div>
+            <nav class="lesson-grid" id="lessonGrid" aria-label="الدروس"></nav>
+            <section id="contentArea" class="content" aria-live="polite"></section>
         </section>
 
         <section class="progress-panel" aria-label="تقدم التعلم">
@@ -46,9 +89,6 @@
             </div>
         </section>
 
-        <h2 class="lessons-heading" data-i18n="lessonsTitle">دروس المحادثة</h2>
-        <nav class="lesson-grid" id="lessonGrid" aria-label="الدروس"></nav>
-        <section id="contentArea" class="content" aria-live="polite"></section>
         <p class="footer-note" data-i18n="footer">اضغط على زر السماعة لسماع النطق الإنجليزي</p>
     </main>
 </body>

@@ -31,9 +31,56 @@ const magicLists = [
     { title: { ar: '🧠 الضمائر والمحددات', en: '🧠 Pronouns and determiners' }, words: [['I', 'أنا', 'I am here.'], ['You', 'أنت / أنتم', 'You are my friend.'], ['He', 'هو', 'He is a man.'], ['She', 'هي', 'She is a girl.'], ['We', 'نحن', 'We are happy.'], ['They', 'هم', 'They are my friends.']] }
 ];
 
+const letters = [
+    { char: 'A', ar: 'ا', words: [['Apple', 'تفاح'], ['Ant', 'نملة'], ['Arrow', 'سهم']] },
+    { char: 'B', ar: 'ب', words: [['Ball', 'كرة'], ['Book', 'كتاب'], ['Bird', 'طائر']] },
+    { char: 'C', ar: 'ج', words: [['Cat', 'قطة'], ['Car', 'سيارة'], ['Cup', 'كوب']] },
+    { char: 'D', ar: 'د', words: [['Dog', 'كلب'], ['Door', 'باب'], ['Desk', 'مكتب']] },
+    { char: 'E', ar: 'هـ', words: [['Egg', 'بيضة'], ['Eye', 'عين'], ['Ear', 'أذن']] },
+    { char: 'F', ar: 'ف', words: [['Fish', 'سمك'], ['Flower', 'زهرة'], ['Flag', 'علم']] },
+    { char: 'G', ar: 'غ', words: [['Goat', 'ماعز'], ['Gold', 'ذهب'], ['Gate', 'بوابة']] },
+    { char: 'H', ar: 'ح', words: [['House', 'منزل'], ['Hat', 'قبعة'], ['Hand', 'يد']] },
+    { char: 'I', ar: 'ي', words: [['Ice', 'جليد'], ['Ink', 'حبر'], ['Island', 'جزيرة']] },
+    { char: 'J', ar: 'ج', words: [['Jar', 'جرة'], ['Jeep', 'جيب'], ['Jet', 'طائرة نفاثة']] },
+    { char: 'K', ar: 'ك', words: [['King', 'ملك'], ['Key', 'مفتاح'], ['Kite', 'طائرة ورقية']] },
+    { char: 'L', ar: 'ل', words: [['Lion', 'أسد'], ['Lemon', 'ليمون'], ['Lamp', 'مصباح']] },
+    { char: 'M', ar: 'م', words: [['Moon', 'قمر'], ['Monkey', 'قرد'], ['Milk', 'حليب']] },
+    { char: 'N', ar: 'ن', words: [['Nose', 'أنف'], ['Nest', 'عش'], ['Nail', 'مسمار']] },
+    { char: 'O', ar: 'و', words: [['Orange', 'برتقالة'], ['Oven', 'فرن'], ['Owl', 'بومة']] },
+    { char: 'P', ar: 'ب', words: [['Pig', 'خنزير'], ['Pen', 'قلم'], ['Piano', 'بيانو']] },
+    { char: 'Q', ar: 'ق', words: [['Queen', 'ملكة'], ['Quilt', 'لحاف'], ['Quiz', 'اختبار']] },
+    { char: 'R', ar: 'ر', words: [['Rabbit', 'أرنب'], ['Rain', 'مطر'], ['Ring', 'خاتم']] },
+    { char: 'S', ar: 'س', words: [['Sun', 'شمس'], ['Snake', 'ثعبان'], ['Star', 'نجمة']] },
+    { char: 'T', ar: 'ت', words: [['Tiger', 'نمر'], ['Tree', 'شجرة'], ['Toy', 'لعبة']] },
+    { char: 'U', ar: 'ع', words: [['Umbrella', 'مظلة'], ['Uncle', 'عم'], ['Uniform', 'زي موحد']] },
+    { char: 'V', ar: 'ف', words: [['Violin', 'كمان'], ['Van', 'سيارة صغيرة'], ['Vegetable', 'خضار']] },
+    { char: 'W', ar: 'و', words: [['Wolf', 'ذئب'], ['Water', 'ماء'], ['Window', 'نافذة']] },
+    { char: 'X', ar: 'كس', words: [['Xylophone', 'الإكسيليفون'], ['X-ray', 'أشعة سينية'], ['X', 'إكس']] },
+    { char: 'Y', ar: 'ي', words: [['Yak', 'ياك'], ['Yellow', 'أصفر'], ['Yo-yo', 'يويو']] },
+    { char: 'Z', ar: 'ز', words: [['Zebra', 'حمار وحشي'], ['Zoo', 'حديقة حيوانات'], ['Zero', 'صفر']] }
+];
+
+const sentences = [
+    { ar: 'مرحباً! أنا أسمي...', en: 'Hello! My name is...' },
+    { ar: 'كيف حالك؟', en: 'How are you?' },
+    { ar: 'أنا بخير، شكراً لك.', en: 'I am fine, thank you.' },
+    { ar: 'أنا من...', en: 'I am from...' },
+    { ar: 'هل تتحدث الإنجليزية؟', en: 'Do you speak English?' },
+    { ar: 'هذا جميل جداً!', en: 'This is very beautiful!' },
+    { ar: 'هل يمكنك مساعدتي؟', en: 'Can you help me?' },
+    { ar: 'شكراً جزيلاً!', en: 'Thank you very much!' },
+    { ar: 'من فضلك، كرر ذلك.', en: 'Please, repeat that.' },
+    { ar: 'أنا لا أفهم.', en: 'I do not understand.' },
+    { ar: 'هل تحب...؟', en: 'Do you like...?' },
+    { ar: 'ما هذا؟', en: 'What is this?' },
+    { ar: 'أين هو...؟', en: 'Where is...?' },
+    { ar: 'كم الساعة؟', en: 'What time is it?' },
+    { ar: 'وداعاً! شكراً لك!', en: 'Goodbye! Thank you!' }
+];
+
 const translations = {
-    ar: { eyebrow: 'تعلم خطوة بخطوة', title: 'الإنجليزية السهلة', subtitle: 'دروس محادثة عملية من الصفر إلى التحدث بثقة', progress: 'تقدمك', completed: 'دروس مكتملة', points: 'نقطة', footer: 'اضغط على زر السماعة لسماع النطق الإنجليزي', vocabulary: 'مفردات الدرس', conversation: 'محادثة قصيرة', listen: 'استمع', complete: 'إكمال الدرس', completedLesson: 'تم إكمال هذا الدرس', previous: 'الدرس السابق', next: 'الدرس التالي', beginner: 'مبتدئ', lesson: 'الدرس', magicEyebrow: 'مفردات أساسية', magicTitle: '🧙 المفتاح السحري', magicNote: 'كلمة إنجليزية مع جملة بسيطة وترجمة عربية ونطق صوتي', word: 'كلمة', sentence: 'جملة', meaning: 'معنى الجملة', lessonsTitle: 'دروس المحادثة' },
-    en: { eyebrow: 'Learn step by step', title: 'Easy English', subtitle: 'Practical conversation lessons from zero to confidence', progress: 'Your progress', completed: 'lessons complete', points: 'points', footer: 'Press the speaker button to hear English pronunciation', vocabulary: 'Lesson vocabulary', conversation: 'Short conversation', listen: 'Listen', complete: 'Complete lesson', completedLesson: 'This lesson is complete', previous: 'Previous lesson', next: 'Next lesson', beginner: 'Beginner', lesson: 'Lesson', magicEyebrow: 'Essential vocabulary', magicTitle: '🧙 The Magic Key', magicNote: 'An English word with a simple sentence, Arabic translation, and audio', word: 'Word', sentence: 'Sentence', meaning: 'Sentence meaning', lessonsTitle: 'Conversation lessons' }
+    ar: { eyebrow: 'تعلم خطوة بخطوة', title: 'الإنجليزية السهلة', subtitle: 'دروس محادثة عملية من الصفر إلى التحدث بثقة', progress: 'تقدمك', completed: 'دروس مكتملة', points: 'نقطة', footer: 'اضغط على زر السماعة لسماع النطق الإنجليزي', vocabulary: 'مفردات الدرس', conversation: 'محادثة قصيرة', listen: 'استمع', complete: 'إكمال الدرس', completedLesson: 'تم إكمال هذا الدرس', previous: 'الدرس السابق', next: 'الدرس التالي', beginner: 'مبتدئ', lesson: 'الدرس', magicEyebrow: 'مفردات أساسية', magicTitle: '🧙 المفتاح السحري', magicNote: 'كلمة إنجليزية مع جملة بسيطة وترجمة عربية ونطق صوتي', word: 'كلمة', sentence: 'جملة', meaning: 'معنى الجملة', lessonsTitle: 'دروس المحادثة', letterNote: 'النطق الصحيح للحرف وكلمات تبدأ به' },
+    en: { eyebrow: 'Learn step by step', title: 'Easy English', subtitle: 'Practical conversation lessons from zero to confidence', progress: 'Your progress', completed: 'lessons complete', points: 'points', footer: 'Press the speaker button to hear English pronunciation', vocabulary: 'Lesson vocabulary', conversation: 'Short conversation', listen: 'Listen', complete: 'Complete lesson', completedLesson: 'This lesson is complete', previous: 'Previous lesson', next: 'Next lesson', beginner: 'Beginner', lesson: 'Lesson', magicEyebrow: 'Essential vocabulary', magicTitle: '🧙 The Magic Key', magicNote: 'An English word with a simple sentence, Arabic translation, and audio', word: 'Word', sentence: 'Sentence', meaning: 'Sentence meaning', lessonsTitle: 'Conversation lessons', letterNote: 'Correct pronunciation of the letter and words that start with it' }
 };
 
 let language = localStorage.getItem('en1-language') || 'ar';
@@ -105,9 +152,14 @@ function applyLanguage() {
     document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
     document.querySelectorAll('[data-i18n]').forEach((element) => { element.textContent = translations[language][element.dataset.i18n]; });
     $('languageToggle').textContent = language === 'ar' ? 'English' : 'العربية';
-    renderMagic();
-    renderLessons();
-    renderLesson();
+    
+    // تحديث الأقسام بناءً على الـ tab النشط
+    const activeTab = document.querySelector('.lesson-type-tab.active');
+    if (activeTab) {
+        switchSection(activeTab.dataset.type);
+    } else {
+        switchSection('letters'); // افتراضي الأحرف
+    }
 }
 
 function renderLessons() {
@@ -152,7 +204,74 @@ function updateProgress() {
     document.querySelector('.progress-bar').setAttribute('aria-valuenow', percent);
 }
 
+function renderLetters() {
+    $('lettersGrid').innerHTML = letters.map((letter, index) => {
+        const wordsHTML = letter.words.map(([en, ar]) => `<small>${en}</small>`).join('');
+        return `<div class="letter-card" type="button" data-letter="${index}">
+            <div class="letter-char">${letter.char}</div>
+            <div class="letter-ar">${letter.ar}</div>
+            <div class="letter-words">${wordsHTML}</div>
+        </div>`;
+    }).join('');
+    
+    document.querySelectorAll('.letter-card').forEach((card) => {
+        card.addEventListener('click', () => {
+            const letterIndex = Number(card.dataset.letter);
+            const letter = letters[letterIndex];
+            speak(letter.char);
+        });
+    });
+}
+
+function renderSentences() {
+    $('sentencesList').innerHTML = sentences.map((sent, index) => {
+        return `<div class="sentence-card" data-sentence="${index}">
+            <span class="sentence-en">${sent.en}</span>
+            <span class="sentence-ar">${language === 'ar' ? sent.ar : sent.en}</span>
+            <button class="sound-btn" type="button" data-speak="${sent.en}">🔊 استمع</button>
+        </div>`;
+    }).join('');
+    
+    document.querySelectorAll('.sentence-card [data-speak]').forEach((button) => {
+        button.addEventListener('click', () => speak(button.dataset.speak));
+    });
+}
+
+function switchSection(sectionType) {
+    // إخفاء جميع الأقسام
+    document.querySelectorAll('.section-content').forEach((section) => {
+        section.classList.remove('active');
+    });
+    
+    // إظهار القسم المختار
+    document.querySelector(`[data-section="${sectionType}"]`).classList.add('active');
+    
+    // تحديث أزرار التبويب
+    document.querySelectorAll('.lesson-type-tab').forEach((tab) => {
+        tab.classList.toggle('active', tab.dataset.type === sectionType);
+    });
+    
+    // تحديث المحتوى
+    if (sectionType === 'letters') {
+        renderLetters();
+    } else if (sectionType === 'sentences') {
+        renderSentences();
+    } else if (sectionType === 'magic') {
+        renderMagic();
+    } else if (sectionType === 'conversations') {
+        renderLessons();
+        renderLesson();
+    }
+}
+
 $('languageToggle').addEventListener('click', () => { language = language === 'ar' ? 'en' : 'ar'; localStorage.setItem('en1-language', language); applyLanguage(); });
+
+// معالج الأحداث للـ Tabs
+document.querySelectorAll('.lesson-type-tab').forEach((tab) => {
+    tab.addEventListener('click', () => {
+        switchSection(tab.dataset.type);
+    });
+});
 
 // تحميل الأصوات المتاحة
 if ('speechSynthesis' in window) {

@@ -108,6 +108,36 @@ h1 { margin: 0; font-size: clamp(27px, 6vw, 42px); line-height: 1.1; }
 
 .content { display: block; }
 
+.lesson-type-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 24px; justify-content: center; }
+.lesson-type-tab { padding: 10px 16px; background: #f1f5f7; border: 2px solid transparent; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; color: var(--ink); transition: all 0.3s ease; }
+.lesson-type-tab:hover { background: #e2e8f0; }
+.lesson-type-tab.active { background: var(--accent); color: white; border-color: var(--accent-dark); }
+
+.section-content { display: none; animation: fadeIn 0.3s ease; }
+.section-content.active { display: block; }
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.letters-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 8px; margin-bottom: 20px; }
+.letter-card { padding: 16px; background: #f8fafb; border: 2px solid var(--line); border-radius: 10px; text-align: center; cursor: pointer; transition: all 0.2s ease; }
+.letter-card:hover { border-color: var(--accent); background: var(--accent-soft); }
+.letter-char { font-size: 32px; font-weight: 800; color: var(--accent-dark); margin-bottom: 4px; }
+.letter-ar { font-size: 14px; color: var(--muted); }
+.letter-words { margin-top: 8px; font-size: 12px; }
+.letter-words small { display: block; color: #64748b; margin: 2px 0; direction: ltr; text-align: left; }
+
+.sentences-list { display: flex; flex-direction: column; gap: 8px; }
+.sentence-card { padding: 12px; background: #f8fafb; border: 1px solid var(--line); border-radius: 8px; cursor: pointer; transition: all 0.2s ease; }
+.sentence-card:hover { background: var(--accent-soft); border-color: var(--accent); }
+.sentence-en { display: block; font-size: 16px; font-weight: 600; color: var(--ink); direction: ltr; text-align: left; margin-bottom: 4px; }
+.sentence-ar { display: block; font-size: 14px; color: var(--muted); direction: rtl; text-align: right; }
+.sentence-card .sound-btn { margin-top: 6px; }
+
+.hidden-section { display: none; }
+
 @media (max-width: 520px) {
     body { padding: 10px 8px; }
     .site-header { align-items: flex-start; }
