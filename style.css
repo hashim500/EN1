@@ -167,7 +167,41 @@ h1 { margin: 0; font-size: clamp(27px, 6vw, 42px); line-height: 1.1; }
 
 .hidden-section { display: none; }
 
+.site-footer {
+    margin-top: 40px;
+    padding: 24px 14px;
+    background: linear-gradient(135deg, var(--accent-soft) 0%, rgba(13, 110, 253, 0.05) 100%);
+    border-top: 2px solid var(--line);
+    text-align: center;
+}
+
+.footer-content {
+    max-width: 760px;
+    margin: auto;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.footer-content p {
+    margin: 0;
+}
+
+.footer-content strong {
+    color: var(--accent-dark);
+    font-weight: 700;
+}
+
 @media (max-width: 520px) {
+    .site-footer {
+        margin-top: 30px;
+        padding: 16px 12px;
+    }
+    
+    .footer-content {
+        font-size: 13px;
+    }
+    
     body { padding: 10px 8px; }
     .site-header { align-items: flex-start; }
     .subtitle { font-size: 13px; }
