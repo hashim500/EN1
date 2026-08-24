@@ -238,6 +238,8 @@ function renderSentences() {
 }
 
 function switchSection(sectionType) {
+    console.log('Switching to section:', sectionType);
+    
     // إخفاء جميع الأقسام
     document.querySelectorAll('.section-content').forEach((section) => {
         section.classList.remove('active');
@@ -247,15 +249,18 @@ function switchSection(sectionType) {
     const targetSection = document.querySelector(`[data-section="${sectionType}"]`);
     if (targetSection) {
         targetSection.classList.add('active');
+    } else {
+        console.warn('Section not found:', sectionType);
     }
     
     // تحديث أزرار التبويب
     document.querySelectorAll('.lesson-type-tab').forEach((tab) => {
-        tab.classList.toggle('active', tab.dataset.type === sectionType);
+        if (tab.dataset.type === sectionType) {
+            tab.classList.add('active');
+        } else {
+            tab.classList.remove('active');
+        }
     });
-    
-    // إعادة إضافة معالجات الأحداث
-    addTabEventListeners();
     
     // تحديث المحتوى
     if (sectionType === 'letters') {
@@ -268,19 +273,24 @@ function switchSection(sectionType) {
         renderLessons();
         renderLesson();
     }
+    
+    console.log('Section switched successfully to:', sectionType);
 }
 
 function addTabEventListeners() {
-    document.querySelectorAll('.lesson-type-tab').forEach((tab) => {
-        // إزالة المستمعين القدامى أولاً
-        const newTab = tab.cloneNode(true);
-        tab.parentNode.replaceChild(newTab, tab);
-        
-        // إضافة المستمع الجديد
-        newTab.addEventListener('click', () => {
-            switchSection(newTab.dataset.type);
-        });
+    // إزالة جميع معالجات الأحداث السابقة بطريقة أفضل
+    const tabs = document.querySelectorAll('.lesson-type-tab');
+    tabs.forEach((tab) => {
+        // استخدام event delegation بدلاً من إضافة مستمعين مباشرة
+        tab.removeEventListener('click', handleTabClick);
+        tab.addEventListener('click', handleTabClick);
     });
+}
+
+function handleTabClick(e) {
+    const tabType = e.currentTarget.dataset.type;
+    console.log('Tab clicked:', tabType);
+    switchSection(tabType);
 }
 
 // تحميل الأصوات المتاحة
@@ -301,5 +311,8 @@ if (langToggle) {
         applyLanguage(); 
     });
 }
+
+// إضافة معالجات أحداث الـ tabs عند البدء
+addTabEventListeners();
 
 applyLanguage();

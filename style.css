@@ -109,9 +109,38 @@ h1 { margin: 0; font-size: clamp(27px, 6vw, 42px); line-height: 1.1; }
 .content { display: block; }
 
 .lesson-type-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 24px; justify-content: center; }
-.lesson-type-tab { padding: 10px 16px; background: #f1f5f7; border: 2px solid transparent; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; color: var(--ink); transition: all 0.3s ease; }
-.lesson-type-tab:hover { background: #e2e8f0; }
-.lesson-type-tab.active { background: var(--accent); color: white; border-color: var(--accent-dark); }
+.lesson-type-tab { 
+    padding: 12px 20px; 
+    background: #f1f5f7; 
+    border: 2px solid #dbe3ed;
+    border-radius: 8px; 
+    cursor: pointer; 
+    font-size: 14px; 
+    font-weight: 600; 
+    color: var(--ink); 
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.lesson-type-tab:hover { 
+    background: #e2e8f0; 
+    border-color: var(--accent-soft);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(8, 127, 140, 0.15);
+}
+
+.lesson-type-tab.active { 
+    background: var(--accent); 
+    color: white; 
+    border-color: var(--accent-dark);
+    box-shadow: 0 4px 12px rgba(8, 127, 140, 0.3);
+    transform: translateY(-2px);
+}
+
+.lesson-type-tab:active {
+    transform: translateY(0);
+}
+
 
 .section-content { display: none; animation: fadeIn 0.3s ease; }
 .section-content.active { display: block; }
